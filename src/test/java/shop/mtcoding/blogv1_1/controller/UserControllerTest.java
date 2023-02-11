@@ -44,9 +44,13 @@ public class UserControllerTest {
                 .content(requestBody)
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE));
 
+        HttpSession session = resultActions.andReturn().getRequest().getSession();
+        User user = (User) session.getAttribute("principal");
+        System.out.println("테스트 : " + user.getUsername());
+
         // then
         resultActions.andExpect(status().is3xxRedirection());
-
+        assertThat(user.getUsername()).isEqualTo("ssar");
     }
 
     @Test
