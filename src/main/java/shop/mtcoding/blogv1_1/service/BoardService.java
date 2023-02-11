@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import shop.mtcoding.blogv1_1.dto.board.boardReq.BoardSaveReqDto;
 import shop.mtcoding.blogv1_1.handler.ex.CustomException;
 import shop.mtcoding.blogv1_1.model.BoardRepository;
+import shop.mtcoding.blogv1_1.util.HtmlParse;
 
 @RequiredArgsConstructor
 @Service
@@ -20,16 +21,7 @@ public class BoardService {
 
     public void 게시글작성(BoardSaveReqDto boardSaveReqDto, int principalId) {
 
-        String thumbnail = "";
-        Document doc = Jsoup.parse(boardSaveReqDto.getContent());
-        Elements els = doc.select("img");
-
-        if (els.size() == 0) {
-            thumbnail = "/images/shop.jpg";
-        } else {
-            Element el = els.get(0);
-            thumbnail = el.attr("src");
-        }
+        String thumbnail = HtmlParse.getThumbnail(boardSaveReqDto.getContent());
 
         try {
             boardRepository.insert(boardSaveReqDto.getTitle(), boardSaveReqDto.getContent(), thumbnail, principalId);
