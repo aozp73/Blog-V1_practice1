@@ -14,4 +14,12 @@ public class UserReq {
         private String password;
         private String email;
     }
+
+    @AllArgsConstructor
+    @Getter
+    @Setter
+    public static class UserLoginReqDto {
+        private String username;
+        private String password;
+    }
 }

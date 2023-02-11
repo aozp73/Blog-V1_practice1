@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.blogv1_1.dto.user.UserReq.UserJoinReqDto;
+import shop.mtcoding.blogv1_1.dto.user.UserReq.UserLoginReqDto;
 import shop.mtcoding.blogv1_1.handler.ex.CustomException;
 import shop.mtcoding.blogv1_1.model.User;
 import shop.mtcoding.blogv1_1.model.UserRepository;
@@ -21,5 +22,9 @@ public class UserService {
             throw new CustomException("동일한 아이디가 존재합니다.");
         }
 
+    }
+
+    public User 로그인(UserLoginReqDto userloginReqDto) {
+        return new User();
     }
 }

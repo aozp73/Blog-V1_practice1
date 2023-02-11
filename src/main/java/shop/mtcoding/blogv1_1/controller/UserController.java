@@ -1,12 +1,16 @@
 package shop.mtcoding.blogv1_1.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.blogv1_1.dto.user.UserReq.UserJoinReqDto;
+import shop.mtcoding.blogv1_1.dto.user.UserReq.UserLoginReqDto;
 import shop.mtcoding.blogv1_1.handler.ex.CustomException;
+import shop.mtcoding.blogv1_1.model.User;
 import shop.mtcoding.blogv1_1.service.UserService;
 
 @RequiredArgsConstructor
@@ -14,6 +18,8 @@ import shop.mtcoding.blogv1_1.service.UserService;
 public class UserController {
 
     private final UserService userService;
+
+    private final HttpSession session;
 
     @GetMapping("/joinForm")
     public String joinForm() {
@@ -41,5 +47,20 @@ public class UserController {
         userService.회원가입(userJoinReqDto);
 
         return "redirect:/loginForm";
+    }
+
+    @PostMapping("/login") // 유효성 검사(Post), 인증 x, 권한 x
+    public String login(UserLoginReqDto userloginReqDto) {
+        // 유효성 검사
+        if (userloginReqDto.getUsername() == null || userloginReqDto.getUsername().isEmpty()) {
+            throw new CustomException("아이디를 입력하세요");
+        }
+        if (userloginReqDto.getPassword() == null || userloginReqDto.getPassword().isEmpty()) {
+            throw new CustomException("패스워드를 입력하세요");
+        }
+
+        User principal = userService.로그인(userloginReqDto);
+
+        return "redirect:/";
     }
 }

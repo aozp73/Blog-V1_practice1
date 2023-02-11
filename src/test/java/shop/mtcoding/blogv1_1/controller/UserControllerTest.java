@@ -3,6 +3,8 @@ package shop.mtcoding.blogv1_1.controller;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import javax.servlet.http.HttpSession;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -13,11 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import lombok.RequiredArgsConstructor;
-import shop.mtcoding.blogv1_1.dto.user.UserReq.UserJoinReqDto;
 
 @Transactional
 @AutoConfigureMockMvc
@@ -28,7 +26,12 @@ public class UserControllerTest {
     private MockMvc mvc;
 
     @Autowired
-    private ObjectMapper om;
+    ObjectMapper om;
+
+    @Test
+    public void login_test() throws Exception {
+
+    }
 
     @Test
     public void join_test() throws Exception {
@@ -39,7 +42,6 @@ public class UserControllerTest {
 
         String requestBody = "username=" + username + "&password=" + password +
                 "&email=" + email;
-        // System.out.println("테스트 : " + requestBody);
 
         // when
         ResultActions resultActions = mvc.perform(post("/join")
@@ -49,4 +51,5 @@ public class UserControllerTest {
         // then
         resultActions.andExpect(status().is3xxRedirection());
     }
+
 }
