@@ -8,6 +8,7 @@
         insert into user_tb(username, password, email, created_at) values(#{username}, #{password}, #{email}, now())
     </insert>
 
+
     <select id="findByAll" resultType="shop.mtcoding.blogv1_1.model.User">
         select * from user_tb
     </select>
