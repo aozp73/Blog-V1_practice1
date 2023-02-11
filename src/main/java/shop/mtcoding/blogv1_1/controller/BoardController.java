@@ -28,14 +28,15 @@ public class BoardController {
     private final BoardRepository boardRepository;
 
     @GetMapping("/board/{id}")
-    public String detail(@PathVariable int id) {
+    public String detail(@PathVariable int id, Model model) {
+        model.addAttribute("dto", boardRepository.findByBoardIdWithUser(id));
+        System.out.println("테스트 : " + id);
         return "board/detail";
     }
 
     @PostMapping("/board") // 유효성 검사(Post), 인증 o, 권한 x
     public ResponseEntity<?> save(@RequestBody BoardSaveReqDto boardSaveReqDto) {
         // 인증
-        System.out.println("테스트1" + boardSaveReqDto.getTitle());
         User principal = (User) session.getAttribute("principal");
         if (principal == null) {
             throw new CustomApiException("로그인이 필요합니다");

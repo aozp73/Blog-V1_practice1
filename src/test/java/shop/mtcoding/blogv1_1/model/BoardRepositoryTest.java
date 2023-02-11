@@ -45,5 +45,6 @@ public class BoardRepositoryTest {
 
         // then
         assertThat(boardMainRespDto.get(0).getContent()).isEqualTo("1번째 내용");
+        assertThat(boardMainRespDto.get(0).getUserId()).isEqualTo(1);
     }
 }
