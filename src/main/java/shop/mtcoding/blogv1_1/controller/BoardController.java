@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.blogv1_1.dto.ResponseDto;
 import shop.mtcoding.blogv1_1.dto.board.boardReq.BoardSaveReqDto;
+import shop.mtcoding.blogv1_1.dto.board.boardReq.BoardUpdateReqDto;
 import shop.mtcoding.blogv1_1.handler.ex.CustomApiException;
 import shop.mtcoding.blogv1_1.model.BoardRepository;
 import shop.mtcoding.blogv1_1.model.User;
@@ -27,6 +29,36 @@ public class BoardController {
     private final HttpSession session;
     private final BoardService boardService;
     private final BoardRepository boardRepository;
+
+    @PutMapping("/board/{id}") // 유효성 검사(Put), 인증 o, 권한 o
+    public ResponseEntity<?> update(@PathVariable int id, @RequestBody BoardUpdateReqDto boardUpdateReqDto) {
+        // 인증
+        User principal = (User) session.getAttribute("principal");
+        if (principal == null) {
+            throw new CustomApiException("로그인이 필요합니다");
+        }
+
+        // 유효성검사
+        if (boardUpdateReqDto.getTitle() == null || boardUpdateReqDto.getTitle().isEmpty()) {
+            throw new CustomApiException("제목을 입력하세요");
+        }
+        if (boardUpdateReqDto.getContent() == null || boardUpdateReqDto.getContent().isEmpty()) {
+            throw new CustomApiException("내용을 입력하세요");
+        }
+        if (boardUpdateReqDto.getTitle().length() > 100) {
+            throw new CustomApiException("제목은 100자 이하여야 합니다");
+        }
+
+        boardService.게시글수정(boardUpdateReqDto, principal.getId());
+
+        return new ResponseEntity<>(new ResponseDto<>(1, "게시글 수정완료", null), HttpStatus.OK);
+    }
+
+    @GetMapping("/board/{id}/updateForm")
+    public String updateForm(@PathVariable int id, Model model) {
+        model.addAttribute("dto", boardRepository.findById(id));
+        return "board/updateForm";
+    }
 
     @DeleteMapping("/board/{id}") // 유효성 검사(x), 인증 o, 권한 o
     public ResponseEntity<?> delete(@PathVariable int id) {
@@ -44,7 +76,6 @@ public class BoardController {
     @GetMapping("/board/{id}")
     public String detail(@PathVariable int id, Model model) {
         model.addAttribute("dto", boardRepository.findByBoardIdWithUser(id));
-        System.out.println("테스트 : " + id);
         return "board/detail";
     }
 
