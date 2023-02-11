@@ -13,7 +13,7 @@ public class HtmlParse {
         Elements els = doc.select("img");
 
         if (els.size() == 0) {
-            thumbnail = "/images/shop.jpg";
+            thumbnail = "/images/ship.jpg";
         } else {
             Element el = els.get(0);
             thumbnail = el.attr("src");
