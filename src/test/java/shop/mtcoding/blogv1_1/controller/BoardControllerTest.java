@@ -23,8 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import shop.mtcoding.blogv1_1.dto.board.boardReq.BoardSaveReqDto;
-import shop.mtcoding.blogv1_1.dto.board.boardReq.BoardUpdateReqDto;
+import shop.mtcoding.blogv1_1.dto.board.BoardReq.BoardSaveReqDto;
+import shop.mtcoding.blogv1_1.dto.board.BoardReq.BoardUpdateReqDto;
 import shop.mtcoding.blogv1_1.model.User;
 
 @Transactional

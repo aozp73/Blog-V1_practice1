@@ -4,8 +4,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
-import shop.mtcoding.blogv1_1.dto.board.boardReq.BoardSaveReqDto;
-import shop.mtcoding.blogv1_1.dto.board.boardReq.BoardUpdateReqDto;
+import shop.mtcoding.blogv1_1.dto.board.BoardReq.BoardSaveReqDto;
+import shop.mtcoding.blogv1_1.dto.board.BoardReq.BoardUpdateReqDto;
 import shop.mtcoding.blogv1_1.handler.ex.CustomApiException;
 import shop.mtcoding.blogv1_1.model.Board;
 import shop.mtcoding.blogv1_1.model.BoardRepository;

@@ -15,10 +15,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.blogv1_1.dto.ResponseDto;
-import shop.mtcoding.blogv1_1.dto.board.boardReq.BoardSaveReqDto;
-import shop.mtcoding.blogv1_1.dto.board.boardReq.BoardUpdateReqDto;
+import shop.mtcoding.blogv1_1.dto.board.BoardReq.BoardSaveReqDto;
+import shop.mtcoding.blogv1_1.dto.board.BoardReq.BoardUpdateReqDto;
 import shop.mtcoding.blogv1_1.handler.ex.CustomApiException;
 import shop.mtcoding.blogv1_1.model.BoardRepository;
+import shop.mtcoding.blogv1_1.model.ReplyRepository;
 import shop.mtcoding.blogv1_1.model.User;
 import shop.mtcoding.blogv1_1.service.BoardService;
 
@@ -29,6 +30,7 @@ public class BoardController {
     private final HttpSession session;
     private final BoardService boardService;
     private final BoardRepository boardRepository;
+    private final ReplyRepository replyRepository;
 
     @PutMapping("/board/{id}") // 유효성 검사(Put), 인증 o, 권한 o
     public ResponseEntity<?> update(@PathVariable int id, @RequestBody BoardUpdateReqDto boardUpdateReqDto) {
@@ -75,7 +77,8 @@ public class BoardController {
 
     @GetMapping("/board/{id}")
     public String detail(@PathVariable int id, Model model) {
-        model.addAttribute("dto", boardRepository.findByBoardIdWithUser(id));
+        model.addAttribute("boardDto", boardRepository.findByBoardIdWithUser(id));
+        model.addAttribute("replyDtos", replyRepository.findByBoardIdwithUser(id));
         return "board/detail";
     }
 
@@ -106,6 +109,7 @@ public class BoardController {
     @GetMapping({ "/", "/main" })
     public String main(Model model) {
         model.addAttribute("dtos", boardRepository.findAllWithUsername());
+
         return "/board/main";
     }
 
