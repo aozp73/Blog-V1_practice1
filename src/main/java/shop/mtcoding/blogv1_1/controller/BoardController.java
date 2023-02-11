@@ -30,7 +30,7 @@ public class BoardController {
     }
 
     @PostMapping("/board") // 유효성 검사(Post), 인증 o, 권한 x
-    public void save(BoardSaveReqDto boardSaveReqDto) {
+    public String save(BoardSaveReqDto boardSaveReqDto) {
         // 인증
         User principal = (User) session.getAttribute("principal");
         if (principal == null) {
@@ -48,7 +48,8 @@ public class BoardController {
             throw new CustomException("제목은 100자 이하여야 합니다");
         }
 
-        boardService.게시글작성(boardSaveReqDto);
+        boardService.게시글작성(boardSaveReqDto, principal.getId());
 
+        return "redirect:/";
     }
 }

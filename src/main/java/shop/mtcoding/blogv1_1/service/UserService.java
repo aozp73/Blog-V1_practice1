@@ -1,5 +1,6 @@
 package shop.mtcoding.blogv1_1.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,12 @@ public class UserService {
         User user = userRepository.findByUsername(userJoinReqDto.getUsername());
         if (user != null) {
             throw new CustomException("동일한 아이디가 존재합니다.");
+        }
+        try {
+            userRepository.insert(userJoinReqDto.getUsername(), userJoinReqDto.getPassword(),
+                    userJoinReqDto.getEmail());
+        } catch (Exception e) {
+            throw new CustomException("서버에 일시적인 오류가 발생했습니다", HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }

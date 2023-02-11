@@ -58,6 +58,6 @@ public class BoardControllerTest {
                 .session(mockSession));
 
         // when
-        resultActions.andExpect(status().isOk());
+        resultActions.andExpect(status().is3xxRedirection());
     }
 }
