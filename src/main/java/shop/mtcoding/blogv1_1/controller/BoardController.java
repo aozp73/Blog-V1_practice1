@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -25,6 +26,11 @@ public class BoardController {
     private final HttpSession session;
     private final BoardService boardService;
     private final BoardRepository boardRepository;
+
+    @GetMapping("/board/{id}")
+    public String detail(@PathVariable int id) {
+        return "board/detail";
+    }
 
     @PostMapping("/board") // 유효성 검사(Post), 인증 o, 권한 x
     public ResponseEntity<?> save(@RequestBody BoardSaveReqDto boardSaveReqDto) {

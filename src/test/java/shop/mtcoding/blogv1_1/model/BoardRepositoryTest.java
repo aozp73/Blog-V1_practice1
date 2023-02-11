@@ -1,4 +1,4 @@
-package shop.mtcoding.blogv1_1.controller.model;
+package shop.mtcoding.blogv1_1.model;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import shop.mtcoding.blogv1_1.dto.board.boardResp.BoardDetailRespDto;
 import shop.mtcoding.blogv1_1.dto.board.boardResp.BoardMainRespDto;
-import shop.mtcoding.blogv1_1.model.BoardRepository;
 
 @MybatisTest
 public class BoardRepositoryTest {
@@ -20,6 +20,18 @@ public class BoardRepositoryTest {
     private BoardRepository boardRepository;
 
     ObjectMapper om;
+
+    @Test
+    public void findByBoardIdWithUser_test() throws Exception {
+        // given
+        om = new ObjectMapper();
+
+        // when
+        BoardDetailRespDto boardDetailRespDto = boardRepository.findByBoardIdWithUser(1);
+
+        // then
+        assertThat(boardDetailRespDto.getContent()).isEqualTo("1번째 내용");
+    }
 
     @Test
     public void findAllWithUser_test() throws Exception {
@@ -33,6 +45,5 @@ public class BoardRepositoryTest {
 
         // then
         assertThat(boardMainRespDto.get(0).getContent()).isEqualTo("1번째 내용");
-
     }
 }

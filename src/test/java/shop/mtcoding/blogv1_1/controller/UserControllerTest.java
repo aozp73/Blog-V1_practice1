@@ -46,7 +46,7 @@ public class UserControllerTest {
 
         HttpSession session = resultActions.andReturn().getRequest().getSession();
         User user = (User) session.getAttribute("principal");
-        System.out.println("테스트 : " + user.getUsername());
+        // System.out.println("테스트 : " + user.getUsername());
 
         // then
         resultActions.andExpect(status().is3xxRedirection());
