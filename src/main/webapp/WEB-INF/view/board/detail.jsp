@@ -6,7 +6,7 @@
             <c:if test="${principal.id == boardDto.userId}">
                 <div class="mb-3">
                     <a href="/board/${boardDto.boardId}/updateForm" class="btn btn-warning">수정</a>
-                    <button onclick="deleteById(`${boardDto.boardId}`)" id="btn-delete"
+                    <button onclick="boardDeleteById(`${boardDto.boardId}`)" id="btn-delete"
                         class="btn btn-danger">삭제</button>
                 </div>
             </c:if>
@@ -43,17 +43,17 @@
             <br />
             <div class="card">
                 <div class="card-header">댓글 리스트</div>
-                <c:forEach items="${replyDtos}" var="replyDtos">
                     <ul id="reply-box" class="list-group">
-                        <li id="reply-1" class="list-group-item d-flex justify-content-between">
+                <c:forEach items="${replyDtos}" var="replyDtos">
+                        <li id="reply-${replyDtos.replyId}" class="list-group-item d-flex justify-content-between">
                             <div>${replyDtos.comment}</div>
                             <div class="d-flex">
                                 <div class="font-italic">작성자 : ${replyDtos.username} &nbsp;</div>
-                                <button onClick="replyDelete()" class="badge bg-secondary">삭제</button>
+                                <button onClick="replyDeleteById(${replyDtos.replyId})" class="badge bg-secondary">삭제</button>
                             </div>
                         </li>
-                    </ul>
                 </c:forEach>
+                    </ul>
 
             </div>
         </div>
@@ -82,7 +82,21 @@
                 });
             }
 
-            function deleteById(id) {
+            function replyDeleteById(id) {
+                $.ajax({
+                    type: "delete",
+                    url: "/reply/" + id,
+                    dataType: "json"
+                }).done((res) => {
+                    alert(res.msg);
+                    // location.href = "/board/"+${boardDto.boardId};
+                    $("#reply-"+id).remove();
+                }).fail((err) => {
+                    alert(err.responseJSON.msg);
+                });
+            }
+
+            function boardDeleteById(id) {
                 $.ajax({
                     type: "delete",
                     url: "/board/" + id,
