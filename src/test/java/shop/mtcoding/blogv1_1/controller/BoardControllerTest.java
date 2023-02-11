@@ -2,6 +2,7 @@ package shop.mtcoding.blogv1_1.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import shop.mtcoding.blogv1_1.dto.board.boardReq.BoardSaveReqDto;
+import shop.mtcoding.blogv1_1.dto.board.boardReq.BoardUpdateReqDto;
 import shop.mtcoding.blogv1_1.model.User;
 
 @Transactional
@@ -52,6 +54,32 @@ public class BoardControllerTest {
     }
 
     @Test
+    public void update_test() throws Exception {
+        // given
+        int id = 1;
+        BoardUpdateReqDto boardUpdateReqDto = new BoardUpdateReqDto();
+        boardUpdateReqDto.setId(1);
+        boardUpdateReqDto.setTitle("수정제목");
+        boardUpdateReqDto.setContent("수정내용");
+        String requestBody = om.writeValueAsString(boardUpdateReqDto);
+        // System.out.println("테스트 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc.perform(put("/board/" + id)
+                .content(requestBody)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .session(mockSession));
+
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        // System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isOk());
+        resultActions.andExpect(jsonPath("$.msg").value("게시글 수정완료"));
+
+    }
+
+    @Test
     public void delete_test() throws Exception {
         // given
         int id = 1;
@@ -60,7 +88,7 @@ public class BoardControllerTest {
         ResultActions resultActions = mvc.perform(delete("/board/" + id)
                 .session(mockSession));
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        System.out.println("테스트 : " + responseBody);
+        // System.out.println("테스트 : " + responseBody);
 
         // then
         resultActions.andExpect(status().isOk());

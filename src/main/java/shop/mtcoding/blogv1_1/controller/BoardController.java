@@ -30,7 +30,7 @@ public class BoardController {
     private final BoardService boardService;
     private final BoardRepository boardRepository;
 
-    @PutMapping("/board/{id}/") // 유효성 검사(Put), 인증 o, 권한 o
+    @PutMapping("/board/{id}") // 유효성 검사(Put), 인증 o, 권한 o
     public ResponseEntity<?> update(@PathVariable int id, @RequestBody BoardUpdateReqDto boardUpdateReqDto) {
         // 인증
         User principal = (User) session.getAttribute("principal");
