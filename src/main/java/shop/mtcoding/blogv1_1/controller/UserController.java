@@ -39,6 +39,7 @@ public class UserController {
         }
 
         userService.회원가입(userJoinReqDto);
+
         return "redirect:/loginForm";
     }
 }
