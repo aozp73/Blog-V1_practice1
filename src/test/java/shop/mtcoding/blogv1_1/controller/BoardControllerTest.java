@@ -1,6 +1,7 @@
 package shop.mtcoding.blogv1_1.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.sql.Timestamp;
@@ -18,6 +19,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import shop.mtcoding.blogv1_1.dto.board.boardReq.BoardSaveReqDto;
 import shop.mtcoding.blogv1_1.model.User;
 
 @Transactional
@@ -27,6 +31,9 @@ public class BoardControllerTest {
 
     @Autowired
     private MockMvc mvc;
+
+    @Autowired
+    ObjectMapper om;
 
     private MockHttpSession mockSession;
 
@@ -46,18 +53,25 @@ public class BoardControllerTest {
     @Test
     public void insert_test() throws Exception {
         // given
-        String requestBody = "title=제목입니다&content=내용입니다";
+        BoardSaveReqDto boardSaveReqDto = new BoardSaveReqDto();
+        boardSaveReqDto.setTitle("제목입니다");
+        boardSaveReqDto.setContent("내용입니다");
+        String requestBody = om.writeValueAsString(boardSaveReqDto);
 
         // then
-
         User user = (User) mockSession.getAttribute("principal");
         System.out.println(user.getUsername());
         ResultActions resultActions = mvc.perform(post("/board")
                 .content(requestBody)
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .session(mockSession));
 
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
         // when
-        resultActions.andExpect(status().is3xxRedirection());
+        resultActions.andExpect(status().isCreated());
+        resultActions.andExpect(jsonPath("$.msg").value("게시글 등록완료"));
+
     }
 }
