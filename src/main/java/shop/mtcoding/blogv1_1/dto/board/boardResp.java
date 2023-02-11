@@ -8,10 +8,20 @@ public class boardResp {
     @Getter
     @Setter
     public static class BoardMainRespDto {
-        private int BoardId;
+        private int boardId;
         private String title;
         private String content;
         private String thumbnail;
+        private int userId;
+        private String username;
+    }
+
+    @Getter
+    @Setter
+    public static class BoardDetailRespDto {
+        private int boardId;
+        private String title;
+        private String content;
         private int userId;
         private String username;
     }
