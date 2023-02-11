@@ -31,6 +31,24 @@ public class UserControllerTest {
     private ObjectMapper om;
 
     @Test
+    public void login_test() throws Exception {
+        // given
+        String username = "ssar";
+        String password = "1234";
+
+        String requestBody = "username=" + username + "&password=" + password;
+
+        // when
+        ResultActions resultActions = mvc.perform(post("/login")
+                .content(requestBody)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE));
+
+        // then
+        resultActions.andExpect(status().is3xxRedirection());
+
+    }
+
+    @Test
     public void join_test() throws Exception {
         // given
         String username = "cos";
