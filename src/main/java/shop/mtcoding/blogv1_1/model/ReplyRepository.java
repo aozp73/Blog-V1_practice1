@@ -11,7 +11,7 @@ import shop.mtcoding.blogv1_1.dto.reply.ReplyResp.ReplyAllRespDto;
 public interface ReplyRepository {
     public List<Reply> findAll();
 
-    public List<ReplyAllRespDto> findByBoardIdwithUser();
+    public List<ReplyAllRespDto> findByBoardIdwithUser(int boardId);
 
     public Reply findById(int id);
 
