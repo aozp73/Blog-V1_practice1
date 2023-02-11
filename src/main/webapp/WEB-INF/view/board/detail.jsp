@@ -31,12 +31,12 @@
 
             <div class="card">
                 <form>
-                    <input id="boardId" type="hidden" name="boardId" value="${boardDto.id}">
+                    <input id="boardId" type="hidden" name="boardId" value="${boardDto.boardId}">
                     <div class="card-body">
-                        <textarea name="comment" id="reply-content" class="form-control" rows="1"></textarea>
+                        <textarea id="comment" class="form-control" rows="1"></textarea>
                     </div>
                     <div class="card-footer">
-                        <button onclick="insert()" type="button" id="btn-reply-save" class="btn btn-primary">등록</button>
+                        <button onclick="insertReply()" type="button" id="btn-reply-save" class="btn btn-primary">등록</button>
                     </div>
                 </form>
             </div>
@@ -59,7 +59,7 @@
         </div>
 
         <script>
-            function insert() {
+            function insertReply() {
                 let comment = $("#comment").val()
                 let boardId = $("#boardId").val()
 

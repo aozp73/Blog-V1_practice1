@@ -33,11 +33,11 @@ public class ReplyController {
 
         // 유효성 검사
         if (replyDetailReqDto.getComment() == null || replyDetailReqDto.getComment().isEmpty()) {
-            throw new CustomApiException("제목을 입력하세요");
+            throw new CustomApiException("댓글을 입력하세요");
         }
 
-        replyService.게시글등록(replyDetailReqDto, principal.getId());
+        replyService.댓글등록(replyDetailReqDto, principal.getId());
 
-        return new ResponseEntity<>(new ResponseDto<>(1, "", null), HttpStatus.CREATED);
+        return new ResponseEntity<>(new ResponseDto<>(1, "댓글을 작성하였습니다", null), HttpStatus.CREATED);
     }
 }

@@ -14,7 +14,7 @@ public class ReplyService {
 
     private final ReplyRepository replyRepository;
 
-    public void 게시글등록(ReplyDetailReqDto replyDetailReqDto, int id) {
+    public void 댓글등록(ReplyDetailReqDto replyDetailReqDto, int id) {
         try {
             replyRepository.insert(replyDetailReqDto.getComment(), replyDetailReqDto.getBoardId(), id);
         } catch (Exception e) {
