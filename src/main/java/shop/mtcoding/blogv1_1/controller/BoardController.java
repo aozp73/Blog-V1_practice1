@@ -48,7 +48,7 @@ public class BoardController {
 
     @GetMapping({ "/", "/main" })
     public String main(Model model) {
-        model.addAttribute("principal", boardRepository.findAllWithUsername());
+        model.addAttribute("dtos", boardRepository.findAllWithUsername());
         return "/board/main";
     }
 
