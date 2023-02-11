@@ -5,7 +5,7 @@
         <div class="container my-3">
             <div class="my-board-box row">
                 <div class="card col-lg-3">
-                    <img class="card-img-top" style="height: 250px;" src="images/dora.png" alt="Card image">
+                    <img class="card-img-top" style="height: 250px;" src="images/ship.jpg" alt="Card image">
                     <hr>
                     <div class="card-body">
                         <h4 class="card-title my-text-ellipsis">제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다</h4>
@@ -13,7 +13,7 @@
                     </div>
                 </div>
                 <div class="card col-lg-3">
-                    <img class="card-img-top" style="height: 250px;" src="images/dora.png" alt="Card image">
+                    <img class="card-img-top" style="height: 250px;" src="images/ship.jpg" alt="Card image">
                     <hr>
                     <div class="card-body">
                         <h4 class="card-title my-text-ellipsis">제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다</h4>
@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="card col-lg-3">
-                    <img class="card-img-top" style="height: 250px;" src="images/dora.png" alt="Card image">
+                    <img class="card-img-top" style="height: 250px;" src="images/ship.jpg" alt="Card image">
                     <hr>
                     <div class="card-body">
                         <h4 class="card-title my-text-ellipsis">제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다</h4>
@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 <div class="card col-lg-3">
-                    <img class="card-img-top" style="height: 250px;" src="images/dora.png   " alt="Card image">
+                    <img class="card-img-top" style="height: 250px;" src="images/ship.jpg" alt="Card image">
                     <hr>
                     <div class="card-body">
                         <h4 class="card-title my-text-ellipsis">제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다</h4>

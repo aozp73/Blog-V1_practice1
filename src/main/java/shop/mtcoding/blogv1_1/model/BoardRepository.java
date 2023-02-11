@@ -7,7 +7,9 @@ import org.apache.ibatis.annotations.Param;
 
 @Mapper
 public interface BoardRepository {
-    public int insert(@Param("title") String title, @Param("content") String content, @Param("userId") int userId);
+    public int insert(@Param("title") String title, @Param("content") String content,
+            @Param("thumbnail") String thumbnail,
+            @Param("userId") int userId);
 
     public List<Board> findByAll();
 
