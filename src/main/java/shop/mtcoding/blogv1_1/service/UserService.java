@@ -39,7 +39,7 @@ public class UserService {
             throw new CustomException("일치하는 아이디가 없습니다");
         }
         // password 일치여부
-        if (user.getPassword() != userloginReqDto.getPassword()) {
+        if (!user.getPassword().equals(userloginReqDto.getPassword())) {
             throw new CustomException("패스워드가 일치하지 않습니다");
         }
 
