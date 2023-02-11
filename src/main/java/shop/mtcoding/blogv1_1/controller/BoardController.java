@@ -3,12 +3,14 @@ package shop.mtcoding.blogv1_1.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.blogv1_1.dto.board.boardReq.BoardSaveReqDto;
 import shop.mtcoding.blogv1_1.handler.ex.CustomException;
+import shop.mtcoding.blogv1_1.model.BoardRepository;
 import shop.mtcoding.blogv1_1.model.User;
 import shop.mtcoding.blogv1_1.service.BoardService;
 
@@ -18,16 +20,7 @@ public class BoardController {
 
     private final HttpSession session;
     private final BoardService boardService;
-
-    @GetMapping({ "/", "/main" })
-    public String main() {
-        return "/board/main";
-    }
-
-    @GetMapping("/board/saveForm")
-    public String saveForm() {
-        return "/board/saveForm";
-    }
+    private final BoardRepository boardRepository;
 
     @PostMapping("/board") // 유효성 검사(Post), 인증 o, 권한 x
     public String save(BoardSaveReqDto boardSaveReqDto) {
@@ -51,5 +44,16 @@ public class BoardController {
         boardService.게시글작성(boardSaveReqDto, principal.getId());
 
         return "redirect:/";
+    }
+
+    @GetMapping({ "/", "/main" })
+    public String main(Model model) {
+        model.addAttribute("principal", boardRepository.findAllWithUsername());
+        return "/board/main";
+    }
+
+    @GetMapping("/board/saveForm")
+    public String saveForm() {
+        return "/board/saveForm";
     }
 }

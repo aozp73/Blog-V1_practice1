@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.mybatis.spring.boot.test.autoconfigure.MybatisTest;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import shop.mtcoding.blogv1_1.dto.board.boardResp.BoardMainRespDto;
@@ -29,7 +28,7 @@ public class BoardRepositoryTest {
 
         // when
         List<BoardMainRespDto> boardMainRespDto = boardRepository.findAllWithUsername();
-        String responseBody = om.writeValueAsString(boardMainRespDto);
+        // String responseBody = om.writeValueAsString(boardMainRespDto);
         // System.out.println("테스트 : " + responseBody);
 
         // then
