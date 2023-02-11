@@ -3,28 +3,28 @@
     <%@ include file="../layout/header.jsp" %>
 
         <div class="container my-3">
-        <c:if test="${principal.id == dto.userId}" >
+        <c:if test="${principal.id == boardDto.userId}" >
             <div class="mb-3">
-                <a href="/board/${dto.boardId}/updateForm" class="btn btn-warning">수정</a>
-                <button onclick="deleteById(`${dto.boardId}`)" id="btn-delete" class="btn btn-danger">삭제</button>
+                <a href="/board/${boardDto.boardId}/updateForm" class="btn btn-warning">수정</a>
+                <button onclick="deleteById(`${boardDto.boardId}`)" id="btn-delete" class="btn btn-danger">삭제</button>
             </div>
         </c:if>
 
 
 
             <div class="mb-2">
-                글 번호 : <span id="id"><i>${dto.boardId} </i></span> 작성자 : <span class="me-3"><i>${dto.username}
+                글 번호 : <span id="id"><i>${boardDto.boardId} </i></span> 작성자 : <span class="me-3"><i>${dto.username}
                     </i></span>
 
                 <i id="heart" class="fa-regular fa-heart my-xl my-cursor" value="no"></i>
             </div>
 
             <div>
-                <h3>${dto.title}</h3>
+                <h3>${boardDto.title}</h3>
             </div>
             <hr />
             <div>
-                <div>${dto.content}</div>
+                <div>${boardDto.content}</div>
             </div>
             <hr />
 
@@ -41,15 +41,18 @@
             <br />
             <div class="card">
                 <div class="card-header">댓글 리스트</div>
+                <c:forEach items="${replyDtos}" var="replyDtos">
                 <ul id="reply-box" class="list-group">
                     <li id="reply-1" class="list-group-item d-flex justify-content-between">
-                        <div>댓글내용입니다</div>
+                        <div>${replyDtos.comment}</div>
                         <div class="d-flex">
-                            <div class="font-italic">작성자 : cos &nbsp;</div>
+                            <div class="font-italic">작성자 : ${replyDtos.username} &nbsp;</div>
                             <button onClick="replyDelete()" class="badge bg-secondary">삭제</button>
                         </div>
                     </li>
                 </ul>
+                </c:forEach>
+
             </div>
         </div>
 
