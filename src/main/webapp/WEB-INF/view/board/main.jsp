@@ -8,6 +8,7 @@
                     <img class="card-img-top" style="height: 250px;" src="images/ship.jpg" alt="Card image">
                     <hr>
                     <div class="card-body">
+                        <div>작성자 : ssar</div>
                         <h4 class="card-title my-text-ellipsis">제목입니다제목입니다제목입니다제목입니다제목입니다제목입니다</h4>
                         <a href="/board/1" class="btn btn-primary">상세보기</a>
                     </div>
