@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.blogv1_1.dto.user.UserReq.UserJoinReqDto;
+import shop.mtcoding.blogv1_1.dto.user.UserReq.UserLoginReqDto;
 import shop.mtcoding.blogv1_1.handler.ex.CustomException;
 import shop.mtcoding.blogv1_1.model.User;
 import shop.mtcoding.blogv1_1.model.UserRepository;
@@ -21,5 +22,19 @@ public class UserService {
             throw new CustomException("동일한 아이디가 존재합니다.");
         }
 
+    }
+
+    public User 로그인(UserLoginReqDto userloginReqDto) {
+        // username 존재여부
+        User user = userRepository.findByUsername(userloginReqDto.getUsername());
+        if (user == null) {
+            throw new CustomException("일치하는 아이디가 없습니다");
+        }
+        // password 일치여부
+        if (!user.getPassword().equals(userloginReqDto.getPassword())) {
+            throw new CustomException("패스워드가 일치하지 않습니다");
+        }
+
+        return user;
     }
 }
