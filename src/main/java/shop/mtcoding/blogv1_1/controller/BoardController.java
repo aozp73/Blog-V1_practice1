@@ -2,14 +2,18 @@ package shop.mtcoding.blogv1_1.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import lombok.RequiredArgsConstructor;
+import shop.mtcoding.blogv1_1.dto.ResponseDto;
 import shop.mtcoding.blogv1_1.dto.board.boardReq.BoardSaveReqDto;
-import shop.mtcoding.blogv1_1.handler.ex.CustomException;
+import shop.mtcoding.blogv1_1.handler.ex.CustomApiException;
 import shop.mtcoding.blogv1_1.model.BoardRepository;
 import shop.mtcoding.blogv1_1.model.User;
 import shop.mtcoding.blogv1_1.service.BoardService;
@@ -23,27 +27,28 @@ public class BoardController {
     private final BoardRepository boardRepository;
 
     @PostMapping("/board") // 유효성 검사(Post), 인증 o, 권한 x
-    public String save(BoardSaveReqDto boardSaveReqDto) {
+    public ResponseEntity<?> save(@RequestBody BoardSaveReqDto boardSaveReqDto) {
         // 인증
+        System.out.println("테스트1" + boardSaveReqDto.getTitle());
         User principal = (User) session.getAttribute("principal");
         if (principal == null) {
-            throw new CustomException("로그인이 필요합니다");
+            throw new CustomApiException("로그인이 필요합니다");
         }
 
         // 유효성 검사
         if (boardSaveReqDto.getTitle() == null || boardSaveReqDto.getTitle().isEmpty()) {
-            throw new CustomException("제목을 입력하세요");
+            throw new CustomApiException("제목을 입력하세요");
         }
         if (boardSaveReqDto.getContent() == null || boardSaveReqDto.getContent().isEmpty()) {
-            throw new CustomException("내용을 입력하세요");
+            throw new CustomApiException("내용을 입력하세요");
         }
         if (boardSaveReqDto.getTitle().length() > 100) {
-            throw new CustomException("제목은 100자 이하여야 합니다");
+            throw new CustomApiException("제목은 100자 이하여야 합니다");
         }
 
         boardService.게시글작성(boardSaveReqDto, principal.getId());
 
-        return "redirect:/";
+        return new ResponseEntity<>(new ResponseDto<>(1, "게시글 등록완료", null), HttpStatus.CREATED);
     }
 
     @GetMapping({ "/", "/main" })
