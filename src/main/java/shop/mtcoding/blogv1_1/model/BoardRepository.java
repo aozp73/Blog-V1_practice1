@@ -13,7 +13,7 @@ public interface BoardRepository {
                         @Param("thumbnail") String thumbnail,
                         @Param("userId") int userId);
 
-        public List<BoardMainRespDto> findAllwithUsername();
+        public List<BoardMainRespDto> findAllWithUsername();
 
         public List<Board> findByAll();
 
