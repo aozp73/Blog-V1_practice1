@@ -13,6 +13,14 @@
         select * from reply_tb
     </select>
 
+    <select id="findByBoardIdwithUser" resultType="shop.mtcoding.blogv1_1.dto.reply.ReplyResp$ReplyAllRespDto">
+        SELECT rt.id reply_id, rt.comment, rt.user_id, rt.board_id, ut.username 
+        FROM REPLY_TB rt
+        right outer join user_tb ut
+        on rt.user_id = ut.id
+        where rt.board_id = ${boardId}
+    </select>
+
     <select id="findById" resultType="shop.mtcoding.blogv1_1.model.Reply">
         select * from reply_tb where id = #{id}
     </select>

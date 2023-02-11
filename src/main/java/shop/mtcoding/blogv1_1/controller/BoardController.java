@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import lombok.RequiredArgsConstructor;
 import shop.mtcoding.blogv1_1.dto.ResponseDto;
-import shop.mtcoding.blogv1_1.dto.board.boardReq.BoardSaveReqDto;
-import shop.mtcoding.blogv1_1.dto.board.boardReq.BoardUpdateReqDto;
+import shop.mtcoding.blogv1_1.dto.board.BoardReq.BoardSaveReqDto;
+import shop.mtcoding.blogv1_1.dto.board.BoardReq.BoardUpdateReqDto;
 import shop.mtcoding.blogv1_1.handler.ex.CustomApiException;
 import shop.mtcoding.blogv1_1.model.BoardRepository;
 import shop.mtcoding.blogv1_1.model.User;

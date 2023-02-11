@@ -3,7 +3,7 @@ package shop.mtcoding.blogv1_1.dto.board;
 import lombok.Getter;
 import lombok.Setter;
 
-public class boardReq {
+public class BoardReq {
 
     @Getter
     @Setter
