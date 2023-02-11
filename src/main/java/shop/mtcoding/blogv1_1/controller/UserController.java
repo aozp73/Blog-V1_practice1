@@ -1,5 +1,7 @@
 package shop.mtcoding.blogv1_1.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +18,10 @@ public class UserController {
 
     private final UserService userService;
 
+    private final HttpSession session;
+
     @PostMapping("/login") // 유효성 검사(Post), 인증 x, 권한 x
+
     public String login(UserLoginReqDto userloginReqDto) {
         // 유효성 검사
         if (userloginReqDto.getUsername() == null || userloginReqDto.getUsername().isEmpty()) {
@@ -26,7 +31,7 @@ public class UserController {
             throw new CustomException("패스워드를 입력하세요");
         }
 
-        userService.로그인(userloginReqDto);
+        session.setAttribute("principal", userService.로그인(userloginReqDto));
 
         return "redirect:/";
     }
