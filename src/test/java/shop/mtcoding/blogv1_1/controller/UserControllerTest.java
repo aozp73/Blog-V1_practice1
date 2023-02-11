@@ -1,6 +1,7 @@
 package shop.mtcoding.blogv1_1.controller;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,21 @@ public class UserControllerTest {
 
     @Test
     public void join_test() throws Exception {
+        // given
+        String username = "cos";
+        String password = "1234";
+        String email = "cos@nate.com";
 
+        String requestBody = "username=" + username + "&password=" + password +
+                "&email=" + email;
+        // System.out.println("테스트 : " + requestBody);
+
+        // when
+        ResultActions resultActions = mvc.perform(post("/join")
+                .content(requestBody)
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE));
+
+        // then
+        resultActions.andExpect(status().is3xxRedirection());
     }
 }
