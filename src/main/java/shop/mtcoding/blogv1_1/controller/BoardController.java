@@ -38,7 +38,7 @@ public class BoardController {
 
         boardService.게시글삭제(id, principal.getId());
 
-        return new ResponseEntity<>(new ResponseDto<>(1, "게시글 삭제완료", null), HttpStatus.CREATED);
+        return new ResponseEntity<>(new ResponseDto<>(1, "게시글 삭제완료", null), HttpStatus.OK);
     }
 
     @GetMapping("/board/{id}")

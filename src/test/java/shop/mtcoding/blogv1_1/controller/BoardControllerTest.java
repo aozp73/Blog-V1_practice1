@@ -1,5 +1,6 @@
 package shop.mtcoding.blogv1_1.controller;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -51,6 +52,23 @@ public class BoardControllerTest {
     }
 
     @Test
+    public void delete_test() throws Exception {
+        // given
+        int id = 1;
+
+        // when
+        ResultActions resultActions = mvc.perform(delete("/board/" + id)
+                .session(mockSession));
+        String responseBody = resultActions.andReturn().getResponse().getContentAsString();
+        System.out.println("테스트 : " + responseBody);
+
+        // then
+        resultActions.andExpect(status().isOk());
+        resultActions.andExpect(jsonPath("$.msg").value("게시글 삭제완료"));
+
+    }
+
+    @Test
     public void insert_test() throws Exception {
         // given
         BoardSaveReqDto boardSaveReqDto = new BoardSaveReqDto();
@@ -58,7 +76,7 @@ public class BoardControllerTest {
         boardSaveReqDto.setContent("내용입니다");
         String requestBody = om.writeValueAsString(boardSaveReqDto);
 
-        // then
+        // when
         User user = (User) mockSession.getAttribute("principal");
         System.out.println(user.getUsername());
         ResultActions resultActions = mvc.perform(post("/board")
@@ -67,9 +85,9 @@ public class BoardControllerTest {
                 .session(mockSession));
 
         String responseBody = resultActions.andReturn().getResponse().getContentAsString();
-        System.out.println("테스트 : " + responseBody);
+        // System.out.println("테스트 : " + responseBody);
 
-        // when
+        // then
         resultActions.andExpect(status().isCreated());
         resultActions.andExpect(jsonPath("$.msg").value("게시글 등록완료"));
 
